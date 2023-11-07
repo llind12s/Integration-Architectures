@@ -29,8 +29,14 @@ public class OrangeHRMRestControllerImpl {
         String apiEndpoint = orangeHRMBaseUrl + "/api/v1/employee/" + id;
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(apiEndpoint, SalesMan.class);
+        ResponseEntity<SalesMan> response = restTemplate.getForEntity(apiEndpoint, SalesMan.class);
+
+        SalesMan employee = response.getBody();
+        SalesMan salesMan = new SalesMan(employee.getFirstname(), employee.getLastname(), employee.getSid());
+
+        return new ResponseEntity<>(salesMan, HttpStatus.OK);
     }
+
 
     @GetMapping
     public ResponseEntity<List<SalesMan>> getAllEmployeeSummaries() {
