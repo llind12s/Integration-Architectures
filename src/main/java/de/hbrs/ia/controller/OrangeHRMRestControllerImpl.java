@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @ComponentScan
 public class OrangeHRMRestControllerImpl {
 
-    @Value("${orangeHRM.baseUrl}") // Define this property in your application.properties or application.yml
+    @Value("${orangeHRM.baseUrl}")
     private String orangeHRMBaseUrl;
 
     @GetMapping("/{id}")
@@ -44,7 +44,6 @@ public class OrangeHRMRestControllerImpl {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        // Use RestTemplate to make the HTTP GET request
         ResponseEntity<List<SalesMan>> response = restTemplate.exchange(
                 apiEndpoint,
                 HttpMethod.GET,
@@ -52,7 +51,6 @@ public class OrangeHRMRestControllerImpl {
                 new ParameterizedTypeReference<>() {}
         );
 
-        // Transform the response into EmployeeSummary objects
         List<SalesMan> employeeSummaries = response.getBody()
                 .stream()
                 .map(employee -> new SalesMan(employee.getFirstname(), employee.getLastname(),employee.getSid()))
